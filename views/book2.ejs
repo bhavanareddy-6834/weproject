@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <script>
+            function getSelectionText(){
+                    var selectedText = "";
+                    //document.getElementById('demo').innerHTML = selectedText;
+                    if (window.getSelection){ // all modern browsers and IE9+
+                        selectedText = window.getSelection().toString();
+                    }
+                    console.log(selectedText);
+                    return selectedText
+                }
+            document.addEventListener('mouseup', function(){
+                    var thetext = getSelectionText();
+                    if (thetext.length > 0){ // check there's some text selected
+                    //document.getElementById('example').innerHTML = thetext;
+                        document.getElementById('content').value =  thetext;
+                        document.forms['processing'].submit();   
+                    }
+                    console.log(thetext);
+                }, false) 
+            </script>
+            <style>
+                #demo{
+                    font-size: 20px;
+                }
+            </style>
+    </head>
+    <body>
+        <h1 id="example"></h1>
+        <pre id="demo"> <%= text %></pre>
+        <form action = "appendText" method = "POST" id="processing">
+            <input type="hidden" name = "content" id="content">
+            <input type="hidden" name="bookname" value="<%= bookname %>">
+        </form>
+    </body>
+</html> 

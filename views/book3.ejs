@@ -1,0 +1,54 @@
+<html>
+    <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            function getSelectionText(){
+                    var selectedText = "";
+                    //document.getElementById('demo').innerHTML = selectedText;
+                    if (window.getSelection){ // all modern browsers and IE9+
+                        selectedText = window.getSelection().toString()
+                    }
+                    console.log(selectedText);
+                    return selectedText
+                }
+            // document.getElementById('myFrame').contentDocument.addEventListener('mouseup', function(){
+            //         var thetext = getSelectionText()
+            //         if (thetext.length > 0){ // check there's some text selected
+            //             document.getElementById("demo").innerHTML = thetext;    
+            //         }
+            //         console.log(thetext);
+            //     }, false)   
+                
+    //             $('myFrame').load(function(){
+    //  //then set up some access points
+    //  var contents = $(this).contents(); // contents of the iframe
+    //  $(contents).find('body').on('mouseup', function(event) { 
+    //      alert('test'); 
+    //  });
+ //});
+</script>
+ <script type='text/javascript'>
+        $(window).load(function () {            
+            var $frame = $("myFrame");
+            $frame.contents().bind("mouseup", function (e) {
+                alert('inside');
+            });
+        });
+            // function selectElementText(e1){
+            //     var range = document.createRange();
+            //     range.selectNodeContents(e1);
+            //     var selection = window.getSelection();
+            //     selection.removeAllRanges();
+            //     selection.addRange(range);
+            // }
+            // var frame = document.getElementById('myFrame');
+            // selectElementText(frame);
+            // var selectedText = getSelectionText();
+            // alert(selectedText);
+        </script>
+    </head>
+    <body>
+        <h1 id="demo">hello</h1>
+        <iframe src="<%= link %>" width="100%" height="100%" id="myFrame"></iframe>
+    </body>
+</html>

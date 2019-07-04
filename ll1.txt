@@ -1,0 +1,139 @@
+def first1(s):
+    ans=set()
+    for i in prod_dict[s]:
+        if i[0] not in nonter:
+            ans.add(i[0])
+        else:
+            for k in first1(i[0]):
+                ans.add(k)
+    return ans
+
+prod=input('enter productions(A=Ba,B=b):')
+prod=prod.split(',')
+prod_dict=[]
+prod_dict=dict(prod_dict)
+productions=[]
+nonter=[]
+for i in prod:
+    s=i.split('=')
+    if s[0] in nonter:
+        prod_dict[s[0]].add(s[1])
+    else:
+        prod_dict[s[0]]={s[1]}
+        nonter.append(s[0])
+    productions.append(s[1])
+ter=[]
+for i in productions:
+    for k in i:
+        if k.isupper() != 1 and k!='~':
+            ter.append(k)
+
+ter=set(ter)
+print(prod_dict)
+print(nonter)
+print(ter)
+first=[]
+first=dict(first)
+for i in nonter:
+    first[i]=set()
+    for j in prod_dict[i]:
+        if j == '~':
+            first[i].add(j)
+        elif j[0] not in nonter:
+            first[i].add(j[0])
+        else:
+            flag=1
+            m=0
+            while (m<=len(j)-1) and flag == 1:
+                flag=0
+                if j[m] in nonter:
+                    for k in first1(j[m]):
+                        first[i].add(k)
+                    if '~' in prod_dict[j[m]]:
+                        m=m+1
+                        flag=1
+                elif m<=len(j)-1 and j[m]!='~':
+                    #if j[m] not in nonter:
+                    first[i].add(j[m])
+                    break
+print(first)
+follow=[]
+follow=dict(follow)
+for i in nonter:
+    follow[i]=set()
+follow[nonter[0]].add('$')
+for i in nonter:
+    for k in prod_dict:
+        for j in prod_dict[k]:
+            if i in j:
+                x=j.index(i)
+                if x<len(j)-1:
+                    if j[x+1] not in nonter:
+                        follow[i].add(j[x+1])
+                    else:
+                        m=x+1
+                        flag=1
+                        while m<=len(j)-1 and flag==1:
+                            flag=0
+                            for h in first[j[m]]:
+                                if h != '~':
+                                    follow[i].add(h)
+                                else:
+                                    flag=1
+                                    m=m+1
+                if (x+1==len(j)) or (m==len(j) and flag==1):
+                    if nonter.index(i)>nonter.index(k):
+                        for h in follow[k]:
+                            follow[i].add(h)
+
+print(follow)
+
+arr=[['0']]
+for i in ter:
+    arr[0].append(i)
+arr[0].append('$')
+for i in nonter:
+    arr.append([i])
+o=1
+for i in nonter:
+    print(i)
+    for j in prod_dict[i]:
+        ans=set()
+        if j=='~':
+            for h in follow[i]:
+                ans.add(h)
+        elif j[0] not in nonter:
+            ans.add(j[0])
+        else:
+            m=0
+            flag=1
+            while m<=len(j)-1 and flag==1:
+                for h in first[j[m]]:
+                    flag=0
+                    if h != '~':
+                        ans.add(h)
+                    else:
+                        flag=1
+                        m=m+1
+        for h in ans:
+            p=1
+            while p<=len(arr[0])-1:
+                if h==arr[0][p]:
+                    arr[o].append(i+"="+j)
+                else:
+                    arr[o].append(" ")
+                p=p+1
+        print(j)
+        print(ans)
+    
+    o=o+1
+print(arr)
+for i in range(0,1):
+    s=""
+    for j in range(0,len(arr[i])):
+        print(arr[i][j], end='\t')
+    print()
+for i in range(1,len(arr)):
+    for j in range(len(arr[i])):
+        print(arr[i][j], end=' ')
+    print()

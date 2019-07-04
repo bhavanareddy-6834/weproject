@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <script>
+                function getSelectionText(){
+                    var selectedText = "hello"
+                    if (document.getElementById('book').getSelection){ // all modern browsers and IE9+
+                        selectedText = document.getElementById('book').getSelection().toString()
+                    }
+                    console.log(selectedText);
+                    return selectedText
+                }
+                document.getElementById('book').addEventListener('mouseup', function(){
+                    var thetext = getSelectionText()
+                    if (thetext.length > 0){ // check there's some text selected
+                        document.getElementById("hello").innerHTML = thetext;    
+                    }
+                    console.log(thetext);
+                }, false)
+                </script>
+    </head>
+    <body>
+            <p id="hello"></p>
+            <embed src="<%= link %>" width="800px" height="2100px" id="book"/>
+
+    </body>
+</html>
