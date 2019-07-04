@@ -19,8 +19,8 @@ var fs = require('fs');
 
 
 const storage = new Storage({
-  projectId: "weproject-e79b0",
-  keyFilename: "C:/Users/sesha/Downloads/weproject-e79b0-6eeb6c658181"
+  projectId: "your projrct id",
+  keyFilename: "json file path"
 });
 
 finapp.set('view engine', 'ejs');
@@ -30,24 +30,24 @@ finapp.use(session({secret: 'notsosecretkey123',resave:false,saveUninitialized:t
 finapp.use(back());
 
 var firebaseConfig = {
-    apiKey: "AIzaSyATl5klh-cuxfH4_rmYpQAT10Bcuq2VH7E",
-    authDomain: "weproject-e79b0.firebaseapp.com",
-    databaseURL: "https://weproject-e79b0.firebaseio.com",
-    projectId: "weproject-e79b0",
-    storageBucket: "weproject-e79b0.appspot.com",
-    messagingSenderId: "406876267281",
-    appId: "1:406876267281:web:0da0a8986e90d1f8"
+    apiKey: "your api key",
+    authDomain: "your auth domain",
+    databaseURL: "database url",
+    projectId: "your project id",
+    storageBucket: "url",
+    messagingSenderId: "id",
+    appId: "your app id"
   };
 
 firebase.initializeApp(firebaseConfig);
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("C:/Users/sesha/Downloads/weproject-e79b0-6eeb6c658181");
+var serviceAccount = require("json file path");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "weproject-e79b0.appspot.com"
+    storageBucket: "url"
 });
 
 var bucket = admin.storage().bucket();
